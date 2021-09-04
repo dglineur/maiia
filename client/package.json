@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "SERVER_API_ENDPOINT=http://localhost:8080 next dev",
+    "dev": "cross-env-shell SERVER_API_ENDPOINT=http://localhost:8080 yarn run dev-launcher",
+    "dev-launcher": "next dev",
     "lint": "eslint --ext .tsx,.ts --fix src/",
     "start": "next start",
     "test": "cypress open",
@@ -15,6 +16,7 @@
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.0",
     "clsx": "^1.1.1",
+    "cross-env": "7.0.3",
     "date-fns": "^2.17.0",
     "express": "^4.17.1",
     "faker": "^5.3.1",
