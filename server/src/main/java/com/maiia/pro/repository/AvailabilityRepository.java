@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AvailabilityRepository extends CrudRepository<Availability, String> {
+public interface AvailabilityRepository extends CrudRepository<Availability, Integer> {
     List<Availability> findByPractitionerId(Integer id);
+    void deleteAllByPractitionerId(Integer id);
 }

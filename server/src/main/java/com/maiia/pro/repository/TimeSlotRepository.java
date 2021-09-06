@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TimeSlotRepository extends CrudRepository<TimeSlot, String> {
+public interface TimeSlotRepository extends CrudRepository<TimeSlot, Integer> {
     List<TimeSlot> findAll();
-    List<TimeSlot> findByPractitionerId(String practitionerId);
+    List<TimeSlot> findByPractitionerId(Integer practitionerId);
 }

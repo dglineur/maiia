@@ -16,7 +16,7 @@ public class ProTimeSlotService {
         return timeSlotRepository.findAll();
     }
 
-    public List<TimeSlot> findByPractitionerId(String practitionerId) {
+    public List<TimeSlot> findByPractitionerId(Integer practitionerId) {
         return timeSlotRepository.findByPractitionerId(practitionerId);
     }
 }

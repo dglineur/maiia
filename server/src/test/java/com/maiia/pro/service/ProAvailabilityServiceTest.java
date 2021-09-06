@@ -43,7 +43,7 @@ class ProAvailabilityServiceTest {
     private TimeSlotRepository timeSlotRepository;
 
     @Test
-    void generateAvailabilities() throws NotImplementedException {
+    void generateAvailabilities() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -62,7 +62,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void checkOldAvailabilitiesAreDeletedWhenAvailabilitiesAreRegenerated() throws NotImplementedException {
+    void checkOldAvailabilitiesAreDeletedWhenAvailabilitiesAreRegenerated() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -79,7 +79,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void generateAvailabilityWithOneAppointment() throws NotImplementedException {
+    void generateAvailabilityWithOneAppointment() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -101,7 +101,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void generateAvailabilityWithExistingAppointments() throws NotImplementedException {
+    void generateAvailabilityWithExistingAppointments() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -127,7 +127,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void generateAvailabilitiesWithExistingTwentyMinutesAppointment() throws NotImplementedException {
+    void generateAvailabilitiesWithExistingTwentyMinutesAppointment() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -142,7 +142,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void generateAvailabilitiesWithAppointmentOnTwoAvailabilities() throws NotImplementedException {
+    void generateAvailabilitiesWithAppointmentOnTwoAvailabilities() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -157,7 +157,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void generateOptimalAvailabilitiesWithExistingTwentyMinutesAppointment() throws NotImplementedException {
+    void generateOptimalAvailabilitiesWithExistingTwentyMinutesAppointment() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
@@ -179,7 +179,7 @@ class ProAvailabilityServiceTest {
     }
 
     @Test
-    void generateOptimalAvailabilitiesWithAppointmentOnTwoAvailabilities() throws NotImplementedException {
+    void generateOptimalAvailabilitiesWithAppointmentOnTwoAvailabilities() {
         Practitioner practitioner = practitionerRepository.save(entityFactory.createPractitioner());
         LocalDateTime startDate = LocalDateTime.of(2020, Month.FEBRUARY, 5, 11, 0, 0);
         timeSlotRepository.save(entityFactory.createTimeSlot(practitioner.getId(), startDate, startDate.plusHours(1)));
