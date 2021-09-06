@@ -10,6 +10,7 @@ import com.maiia.pro.repository.TimeSlotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class ProAvailabilityService {
         return availabilityRepository.findByPractitionerId(practitionerId);
     }
 
+    @Transactional
     public List<Availability> generateAvailabilities(Integer practitionerId) {
         //need to check if practitionner exist
 
@@ -45,8 +47,9 @@ public class ProAvailabilityService {
         //need appointment for practitioner
         List<Appointment> appointments = appointmentRepository.findByPractitionerId(practitionerId);
 
-
-        return generate(practitionerId, timeslots, appointments);
+        List<Availability> allAvailabilities = generate(practitionerId, timeslots, appointments);
+        availabilityRepository.saveAll(allAvailabilities);
+        return allAvailabilities;
     }
 
     private List<Availability> generate(Integer practitionerId, List<TimeSlot> timeSlots, List<Appointment> appointments) {
@@ -58,8 +61,8 @@ public class ProAvailabilityService {
             LocalDateTime startCursor = timeSlot.getStartDate();
             LocalDateTime endCursor = timeSlot.getStartDate().plusMinutes(AVAILABILITY_SPAN);
 
-            while(endCursor.compareTo(timeSlot.getEndDate()) <= 0) {
-                if(!isOverlappingAppointment(endCursor, appointments)) {
+            while (endCursor.compareTo(timeSlot.getEndDate()) <= 0) {
+                if (!isOverlappingAppointment(endCursor, appointments)) {
                     lstAvailabilities.add(Availability.builder().practitionerId(practitionerId).startDate(startCursor).endDate(endCursor).build());
                 }
                 startCursor = endCursor;
@@ -75,7 +78,7 @@ public class ProAvailabilityService {
     }
 
     private boolean isOverlappingAppointment(LocalDateTime timeToCheck, List<Appointment> appointments) {
-        long nbOfOccurences = appointments.stream().filter(appointment -> timeToCheck.isAfter(appointment.getStartDate()) && timeToCheck.isBefore(appointment.getEndDate())).count();
+        long nbOfOccurences = appointments.stream().filter(appointment -> timeToCheck.compareTo(appointment.getStartDate()) > 0 && timeToCheck.compareTo(appointment.getEndDate()) <= 0).count();
         return nbOfOccurences != 0 ? true : false;
     }
 }
