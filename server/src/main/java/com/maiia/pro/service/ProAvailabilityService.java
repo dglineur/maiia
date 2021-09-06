@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProAvailabilityService {
@@ -57,28 +58,31 @@ public class ProAvailabilityService {
         List<Availability> lstAvailabilities = new ArrayList<Availability>();
 
         for (TimeSlot timeSlot : timeSlots) {
-            //If the 15min are available, 1 availability
             LocalDateTime startCursor = timeSlot.getStartDate();
             LocalDateTime endCursor = timeSlot.getStartDate().plusMinutes(AVAILABILITY_SPAN);
-
-            while (endCursor.compareTo(timeSlot.getEndDate()) <= 0) {
-                if (!isOverlappingAppointment(endCursor, appointments)) {
+            while (startCursor.compareTo(timeSlot.getEndDate()) < 0 ) {
+                List<Appointment> overlappingAppointments = searchOverlappingAppointments(endCursor, appointments);
+                if (overlappingAppointments.size() == 0) {
                     lstAvailabilities.add(Availability.builder().practitionerId(practitionerId).startDate(startCursor).endDate(endCursor).build());
+                    startCursor = endCursor;
                 }
-                startCursor = endCursor;
-                endCursor = endCursor.plusMinutes(AVAILABILITY_SPAN);
+                else {
+                    startCursor = overlappingAppointments.stream().map(Appointment::getEndDate).max(LocalDateTime::compareTo).get();
+                }
 
+                if(startCursor.plusMinutes(AVAILABILITY_SPAN).compareTo(timeSlot.getEndDate()) < 0) {
+                    endCursor = startCursor.plusMinutes(AVAILABILITY_SPAN);
+                }
+                else {
+                    endCursor = timeSlot.getEndDate();
+                }
             }
-            //if the period is less than 15min
-            //if an appointment end before the 15min period, test the new availability at the end of the appointment
-            //if an appointment is not ended before the 15min period,
         }
 
         return lstAvailabilities;
     }
 
-    private boolean isOverlappingAppointment(LocalDateTime timeToCheck, List<Appointment> appointments) {
-        long nbOfOccurences = appointments.stream().filter(appointment -> timeToCheck.compareTo(appointment.getStartDate()) > 0 && timeToCheck.compareTo(appointment.getEndDate()) <= 0).count();
-        return nbOfOccurences != 0 ? true : false;
+    private List<Appointment> searchOverlappingAppointments(LocalDateTime timeToCheck, List<Appointment> appointments) {
+        return appointments.stream().filter(appointment -> timeToCheck.compareTo(appointment.getStartDate()) > 0 && timeToCheck.compareTo(appointment.getEndDate()) <= 0).collect(Collectors.toList());
     }
 }
