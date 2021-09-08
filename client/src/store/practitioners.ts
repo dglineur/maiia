@@ -1,6 +1,10 @@
-import {createAsyncThunk, createEntityAdapter, createSlice,} from '@reduxjs/toolkit';
-import {parseIds, SERVER_API_ENDPOINT} from 'store/utils';
-import {Practitioner} from 'store/types';
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+} from '@reduxjs/toolkit';
+import { parseIds, SERVER_API_ENDPOINT } from 'store/utils';
+import { Practitioner } from 'store/types';
 
 export const getPractitioners = createAsyncThunk(
   'getPractitioners',
