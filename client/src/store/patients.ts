@@ -17,14 +17,20 @@ const patientsAdapter = createEntityAdapter<Patient>({
 });
 
 export const patientsSelectors = patientsAdapter.getSelectors();
+export const selectedPatientId = (state) => state.patients.selectedPatientId;
 
 const patientsSlice = createSlice({
   name: 'patients',
   initialState: patientsAdapter.getInitialState({
     loading: false,
     error: null,
+    selectedPatientId: undefined,
   }),
-  reducers: {},
+  reducers: {
+    setSelectedPatientId: (state, action) => {
+      state.selectedPatientId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getPatients.pending, (state) => {
       state.loading = true;
@@ -41,4 +47,5 @@ const patientsSlice = createSlice({
   },
 });
 
+export const { setSelectedPatientId } = patientsSlice.actions;
 export default patientsSlice;

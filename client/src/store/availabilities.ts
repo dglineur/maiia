@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import { parseIds, SERVER_API_ENDPOINT } from 'store/utils';
 import { Availability } from 'store/types';
+import patientsSlice from 'store/patients';
 
 export const getAvailabilities = createAsyncThunk(
   'getAvailabilities',
@@ -23,14 +24,21 @@ const availabilitiesAdapter = createEntityAdapter<Availability>({
 });
 
 export const availabilitiesSelectors = availabilitiesAdapter.getSelectors();
+export const selectedAvailabilityId = (state) =>
+  state.availabilities.selectedAvailabilityId;
 
 const availabilitiesSlice = createSlice({
   name: 'patients',
   initialState: availabilitiesAdapter.getInitialState({
     loading: false,
     error: null,
+    selectedAvailabilityId: undefined,
   }),
-  reducers: {},
+  reducers: {
+    setSelectedAvailabilityId: (state, action) => {
+      state.selectedAvailabilityId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAvailabilities.pending, (state) => {
       state.loading = true;
@@ -47,4 +55,5 @@ const availabilitiesSlice = createSlice({
   },
 });
 
+export const { setSelectedAvailabilityId } = availabilitiesSlice.actions;
 export default availabilitiesSlice;

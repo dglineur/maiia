@@ -18,8 +18,8 @@ public class ProAvailabilityController {
     private ProAvailabilityService proAvailabilityService;
 
     @ApiOperation(value = "Get availabilities by practitionerId")
-    @GetMapping
-    public List<Availability> getAvailabilities(@RequestParam final Integer practitionerId) throws NotImplementedException {
+    @GetMapping("/{practitionerId}")
+    public List<Availability> getAvailabilities(@PathVariable final Integer practitionerId) {
         return proAvailabilityService.generateAvailabilities(practitionerId);
     }
 

@@ -1,10 +1,6 @@
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSlice,
-} from '@reduxjs/toolkit';
-import { parseIds, SERVER_API_ENDPOINT } from 'store/utils';
-import { Practitioner } from 'store/types';
+import {createAsyncThunk, createEntityAdapter, createSlice,} from '@reduxjs/toolkit';
+import {parseIds, SERVER_API_ENDPOINT} from 'store/utils';
+import {Practitioner} from 'store/types';
 
 export const getPractitioners = createAsyncThunk(
   'getPractitioners',
@@ -20,14 +16,21 @@ const practitionersAdapter = createEntityAdapter<Practitioner>({
 });
 
 export const practitionersSelectors = practitionersAdapter.getSelectors();
+export const selectedPractitionerId = (state) =>
+  state.practitioners.selectedPractitionerId;
 
 const practitionersSlice = createSlice({
   name: 'practitioners',
   initialState: practitionersAdapter.getInitialState({
     loading: false,
     error: null,
+    selectedPractitionerId: undefined,
   }),
-  reducers: {},
+  reducers: {
+    setSelectedPractitionerId: (state, action) => {
+      state.selectedPractitionerId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getPractitioners.pending, (state) => {
       state.loading = true;
@@ -44,4 +47,5 @@ const practitionersSlice = createSlice({
   },
 });
 
+export const { setSelectedPractitionerId } = practitionersSlice.actions;
 export default practitionersSlice;

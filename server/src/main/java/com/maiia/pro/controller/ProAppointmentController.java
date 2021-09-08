@@ -27,4 +27,10 @@ public class ProAppointmentController {
     public List<Appointment> getAppointments() {
         return proAppointmentService.findAll();
     }
+
+    @ApiOperation(value = "Post an appointment")
+    @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Appointment postAppointment(@RequestBody Appointment appointment) {
+        return proAppointmentService.save(appointment);
+    }
 }
