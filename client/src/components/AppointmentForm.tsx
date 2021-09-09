@@ -31,10 +31,16 @@ import {
 import { createNewAppointment } from 'store/appointments';
 import { formatDateRange } from 'utils/date';
 import { Controller, useForm } from 'react-hook-form';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+  formSection: {
+    marginTop: '10px',
+  },
+});
 
 const AppointmentForm = () => {
   const {
-    register,
     handleSubmit,
     watch,
     control,
@@ -42,6 +48,7 @@ const AppointmentForm = () => {
     formState: { errors },
   } = useForm();
 
+  const classes = useStyles();
   const dispatch = useDispatch();
   const patientId = useSelector(selectedPatientId);
   const practitionerId = useSelector(selectedPractitionerId);
@@ -87,8 +94,6 @@ const AppointmentForm = () => {
 
       dispatch(createNewAppointment(appointment));
       setValue('availabilitiesList', '');
-    } else {
-      alert('No appointment selected');
     }
   };
 
@@ -96,136 +101,134 @@ const AppointmentForm = () => {
   //so, because it's a test and not an prod application, i'll use styledComponent here and makeStyles in AppointmentCard
   const RequiredField = styled('span')(({ theme }) => ({
     paddingLeft: `5px`,
+    marginTop: '10px',
     color: 'red',
   }));
 
   const FieldLabel = styled('span')(({ theme }) => ({
     paddingRight: `5px`,
     minWidth: '75px',
+    marginTop: '10px',
   }));
 
   return (
-    <React.Fragment>
-      <Box display="flex" flexDirection="column" py={2}>
-        <form
-          id="appointment-creation"
-          onSubmit={handleSubmit(handleAppointmentCreation)}
-        >
-          <Grid container xs={12}>
-            <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
-              <FieldLabel>Choose a practitioner :</FieldLabel>
-            </Grid>
-            <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
-              <Controller
-                control={control}
-                name={'practitionerList'}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Select
-                    id={'practitionerList'}
-                    onChange={(event) => {
-                      field.onChange(event.target.value);
-                      dispatch(setSelectedPractitionerId(event.target.value));
-                    }}
-                  >
-                    {practitioners.map((practitioner, index) => {
-                      return (
-                        <MenuItem value={practitioner.id} key={index}>
-                          {practitioner.firstName} {practitioner.lastName}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
-              {errors.practitionerList && (
-                <RequiredField>This field is required</RequiredField>
-              )}
-            </Grid>
+    <Box display="flex" flexDirection="column" py={2}>
+      <form
+        id="appointment-creation"
+        onSubmit={handleSubmit(handleAppointmentCreation)}
+      >
+        <Grid container xs={12} className={classes.formSection}>
+          <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
+            <FieldLabel>Choose a practitioner :</FieldLabel>
           </Grid>
-          <Grid container xs={12}>
-            <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
-              <FieldLabel>Choose a patient :</FieldLabel>
-            </Grid>
-            <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
-              <Controller
-                control={control}
-                name={'patientList'}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Select
-                    id={'patientList'}
-                    onChange={(event) => {
-                      field.onChange(event.target.value);
-                      dispatch(setSelectedPatientId(event.target.value));
-                    }}
-                  >
-                    {patients.map((patient, index) => {
-                      return (
-                        <MenuItem value={patient.id} key={index}>
-                          {patient.firstName} {patient.lastName}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
-              {errors.patientList && (
-                <RequiredField>This field is required</RequiredField>
-              )}
-            </Grid>
-          </Grid>
-          <Grid container xs={12}>
-            <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
-              <FieldLabel>Availabilities :</FieldLabel>
-            </Grid>
-            <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
-              <Controller
-                control={control}
-                name={'availabilitiesList'}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Select
-                    id={'availabilitiesList'}
-                    onChange={(event) => {
-                      field.onChange(event.target.value);
-                      dispatch(setSelectedAvailabilityId(event.target.value));
-                    }}
-                  >
-                    {availabilities.map((availability, index) => {
-                      return (
-                        <MenuItem value={availability.id} key={index}>
-                          {formatDateRange({
-                            from: new Date(availability.startDate),
-                            to: new Date(availability.endDate),
-                          })}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
-              {errors.availabilitiesList && (
-                <RequiredField>This field is required</RequiredField>
-              )}
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item>
-              <Box py={2}>
-                <Button
-                  type={'submit'}
-                  form="appointment-creation"
-                  variant="outlined"
+          <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
+            <Controller
+              control={control}
+              name={'practitionerList'}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  id={'practitionerList'}
+                  onChange={(event) => {
+                    field.onChange(event.target.value);
+                    dispatch(setSelectedPractitionerId(event.target.value));
+                  }}
                 >
-                  Create Appointment
-                </Button>
-              </Box>
-            </Grid>
+                  {practitioners.map((practitioner, index) => {
+                    return (
+                      <MenuItem value={practitioner.id} key={index}>
+                        {practitioner.firstName} {practitioner.lastName}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+            {errors.practitionerList && (
+              <RequiredField>This field is required</RequiredField>
+            )}
           </Grid>
-        </form>
-      </Box>
-    </React.Fragment>
+        </Grid>
+        <Grid container xs={12} className={classes.formSection}>
+          <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
+            <FieldLabel>Choose a patient :</FieldLabel>
+          </Grid>
+          <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
+            <Controller
+              control={control}
+              name={'patientList'}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  id={'patientList'}
+                  onChange={(event) => {
+                    field.onChange(event.target.value);
+                    dispatch(setSelectedPatientId(event.target.value));
+                  }}
+                >
+                  {patients.map((patient, index) => {
+                    return (
+                      <MenuItem value={patient.id} key={index}>
+                        {patient.firstName} {patient.lastName}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+            {errors.patientList && (
+              <RequiredField>This field is required</RequiredField>
+            )}
+          </Grid>
+        </Grid>
+        <Grid container xs={12} className={classes.formSection}>
+          <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
+            <FieldLabel>Availabilities :</FieldLabel>
+          </Grid>
+          <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
+            <Controller
+              control={control}
+              name={'availabilitiesList'}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  id={'availabilitiesList'}
+                  onChange={(event) => {
+                    field.onChange(event.target.value);
+                    dispatch(setSelectedAvailabilityId(event.target.value));
+                  }}
+                >
+                  {availabilities.map((availability, index) => {
+                    return (
+                      <MenuItem value={availability.id} key={index}>
+                        {formatDateRange({
+                          from: new Date(availability.startDate),
+                          to: new Date(availability.endDate),
+                        })}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
+            />
+            {errors.availabilitiesList && (
+              <RequiredField>This field is required</RequiredField>
+            )}
+          </Grid>
+        </Grid>
+        <Grid item className={classes.formSection}>
+          <Box py={2}>
+            <Button
+              type={'submit'}
+              form="appointment-creation"
+              variant="outlined"
+            >
+              Create Appointment
+            </Button>
+          </Box>
+        </Grid>
+      </form>
+    </Box>
   );
 };
 
