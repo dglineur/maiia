@@ -2,11 +2,17 @@ import AppointmentForm from 'components/AppointmentForm';
 import AppointmentList from 'components/AppointmentList';
 import Section from 'components/Section';
 import AllTasks from 'components/AllTasks';
+import { Hidden, Typography } from '@material-ui/core';
 
 const AppointmentsPage = () => {
   return (
     <div className="appointment page">
-      <h1>Appointments</h1>
+      <Hidden smDown>
+        <Typography variant={'h1'}>Appointments</Typography>
+      </Hidden>
+      <Hidden mdUp>
+        <Typography variant={'h3'}>Appointments</Typography>
+      </Hidden>
       <Section
         name="instructions"
         title="Instructions"
