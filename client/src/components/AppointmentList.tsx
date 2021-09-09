@@ -1,11 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { appointmentsSelectors, getAppointments } from 'store/appointments';
-import { Card, CardContent, CardHeader, Typography } from '@material-ui/core';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import { formatDateRange } from 'utils/date';
+import AppointmentCard from 'components/AppointmentCard';
+import { makeStyles } from '@material-ui/styles';
+
+//use of makeStyle instead of traditional scss to avoid scss with hundreds of lines
+const useStyles = makeStyles({
+  appointmentCard: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+  },
+});
 
 const AppointmentList = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const appointments = useSelector((state) =>
     appointmentsSelectors.selectAll(state.appointments),
@@ -16,28 +25,9 @@ const AppointmentList = () => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.appointmentCard}>
       {appointments.map((appointment, index) => {
-        return (
-          <Card key={appointment.id}>
-            <CardHeader
-              avatar={<CalendarTodayIcon />}
-              title={
-                <Typography>
-                  {formatDateRange({
-                    from: new Date(appointment.startDate),
-                    to: new Date(appointment.endDate),
-                  })}
-                </Typography>
-              }
-            />
-            <CardContent>
-              <pre>
-                <code>{JSON.stringify(appointment, null, 2)}</code>
-              </pre>
-            </CardContent>
-          </Card>
-        );
+        return <AppointmentCard key={index} appointment={appointment} />;
       })}
     </div>
   );
