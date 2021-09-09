@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,9 @@ public class ProAvailabilityService {
     @Autowired
     private TimeSlotRepository timeSlotRepository;
 
+    @Autowired
+    private ProPractitionerService proPractitionerService;
+
     private int AVAILABILITY_SPAN = 15;
 
     public List<Availability> findByPractitionerId(Integer practitionerId) {
@@ -35,14 +39,14 @@ public class ProAvailabilityService {
     }
 
     @Transactional
-    public List<Availability> generateAvailabilities(Integer practitionerId) {
-        //need to check if practitionner exist
+    public List<Availability> generateAvailabilities(Integer practitionerId) throws NoSuchElementException {
+        //need to check if practitioner exist, if ot that already throw a NoSuchElementException
+        proPractitionerService.find(practitionerId);
 
         //clean availabilities for this practitioner
         availabilityRepository.deleteAllByPractitionerId(practitionerId);
 
         //need timeslot for practitioner
-        //FIXME : Why this service ask string instead of integer, rework to do ? in bdd it's integer
         List<TimeSlot> timeslots = timeSlotRepository.findByPractitionerId(practitionerId);
 
         //need appointment for practitioner

@@ -4,11 +4,16 @@ import com.maiia.pro.entity.Availability;
 import com.maiia.pro.exception.NotImplementedException;
 import com.maiia.pro.service.ProAvailabilityService;
 import io.swagger.annotations.ApiOperation;
+import javassist.bytecode.ByteArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @CrossOrigin
 @RestController
@@ -19,8 +24,13 @@ public class ProAvailabilityController {
 
     @ApiOperation(value = "Get availabilities by practitionerId")
     @GetMapping("/{practitionerId}")
-    public List<Availability> getAvailabilities(@PathVariable final Integer practitionerId) {
-        return proAvailabilityService.generateAvailabilities(practitionerId);
+    public ResponseEntity<List<Availability>> getAvailabilities(@PathVariable final Integer practitionerId, HttpServletResponse response) {
+        try {
+            return new ResponseEntity<>(proAvailabilityService.generateAvailabilities(practitionerId), HttpStatus.OK);
+        }
+        catch (NoSuchElementException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
