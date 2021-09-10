@@ -29,7 +29,7 @@ public class ProAvailabilityController {
             return new ResponseEntity<>(proAvailabilityService.generateAvailabilities(practitionerId), HttpStatus.OK);
         }
         catch (NoSuchElementException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
