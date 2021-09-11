@@ -119,8 +119,8 @@ const AppointmentForm = () => {
         onSubmit={handleSubmit(handleAppointmentCreation)}
         datacy={'appointment-form'}
       >
-        <Grid container xs={12} className={classes.formSection}>
-          <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
+        <Grid container className={classes.formSection}>
+          <Grid item xs={12} md={4} lg={3} xl={2}>
             <FieldLabel>Choose a practitioner :</FieldLabel>
           </Grid>
           <Grid item xs={12} md={8} lg={9} xl={10}>
@@ -135,6 +135,7 @@ const AppointmentForm = () => {
                     field.onChange(event.target.value);
                     dispatch(setSelectedPractitionerId(event.target.value));
                   }}
+                  defaultValue={''}
                   datacy={'practitioners-list'}
                 >
                   {practitioners.map((practitioner, index) => {
@@ -154,11 +155,11 @@ const AppointmentForm = () => {
             )}
           </Grid>
         </Grid>
-        <Grid container xs={12} className={classes.formSection}>
+        <Grid container className={classes.formSection}>
           <Grid item xs={12} md={4} lg={3} xl={2}>
             <FieldLabel>Choose a patient :</FieldLabel>
           </Grid>
-          <Grid item wrap={'wrap'} xs={12} md={8} lg={9} xl={10}>
+          <Grid item xs={12} md={8} lg={9} xl={10}>
             <Controller
               control={control}
               name={'patientList'}
@@ -170,6 +171,7 @@ const AppointmentForm = () => {
                     field.onChange(event.target.value);
                     dispatch(setSelectedPatientId(event.target.value));
                   }}
+                  defaultValue={''}
                   datacy={'patients-list'}
                 >
                   {patients.map((patient, index) => {
@@ -189,8 +191,8 @@ const AppointmentForm = () => {
             )}
           </Grid>
         </Grid>
-        <Grid container xs={12} className={classes.formSection}>
-          <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
+        <Grid container className={classes.formSection}>
+          <Grid item xs={12} md={4} lg={3} xl={2}>
             <FieldLabel>Availabilities :</FieldLabel>
           </Grid>
           <Grid item xs={12} md={8} lg={9} xl={10}>
@@ -205,6 +207,7 @@ const AppointmentForm = () => {
                     field.onChange(event.target.value);
                     dispatch(setSelectedAvailabilityId(event.target.value));
                   }}
+                  defaultValue={''}
                   datacy={'availabilities-list'}
                 >
                   {availabilities.map((availability, index) => {

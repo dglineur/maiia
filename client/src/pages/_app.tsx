@@ -1,10 +1,10 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createTheme, ThemeProvider } from '@material-ui/core';
 import { Layout } from 'components/Layout';
 import { Provider } from 'react-redux';
 import store from 'store';
 import 'styles/styles.scss';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: { main: '#000' },
     secondary: { main: '#FFF' },
