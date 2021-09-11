@@ -43,12 +43,16 @@ export const AppointmentCard = ({ appointment }: appointmentProps) => {
   );
 
   return (
-    <Card key={appointment.id} className={classes.appointmentItem}>
+    <Card
+      key={appointment.id}
+      className={classes.appointmentItem}
+      datacy={`appointment-card`}
+    >
       <Hidden mdDown>
         <CardHeader
           avatar={<CalendarTodayIcon />}
           title={
-            <Typography>
+            <Typography datacy={`appointment-card-date`}>
               {formatDateRange({
                 from: new Date(appointment.startDate),
                 to: new Date(appointment.endDate),
@@ -61,7 +65,7 @@ export const AppointmentCard = ({ appointment }: appointmentProps) => {
         <Grid>
           <Hidden lgUp>
             <Grid>
-              <Typography>
+              <Typography datacy={`appointment-card-date`}>
                 {formatDateRange({
                   from: new Date(appointment.startDate),
                   to: new Date(appointment.endDate),
@@ -74,7 +78,7 @@ export const AppointmentCard = ({ appointment }: appointmentProps) => {
             <Typography>
               Practitioner:
               {practitioner && (
-                <Typography>
+                <Typography datacy={`appointment-card-practitioner`}>
                   {practitioner.firstName} {practitioner.lastName}
                 </Typography>
               )}
@@ -86,7 +90,7 @@ export const AppointmentCard = ({ appointment }: appointmentProps) => {
           <Grid>
             <Typography> Patient: </Typography>{' '}
             {patient && (
-              <Typography>
+              <Typography datacy={`appointment-card-patient`}>
                 {patient.firstName} {patient.lastName}
               </Typography>
             )}

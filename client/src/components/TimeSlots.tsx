@@ -14,7 +14,7 @@ const TimeSlots = (props) => {
         <Card
           key={item.id}
           datacy={getTimeSlotDatacy(item.id)}
-          className="timeSlot__item btn"
+          className="timeSlot__item btn timeslot-item"
         >
           <CardHeader
             avatar={<CalendarTodayIcon />}

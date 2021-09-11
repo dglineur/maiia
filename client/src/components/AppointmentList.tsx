@@ -25,7 +25,7 @@ const AppointmentList = () => {
   }, []);
 
   return (
-    <div className={classes.appointmentCard}>
+    <div className={classes.appointmentCard} datacy={'appointment-list'}>
       {appointments.map((appointment, index) => {
         return <AppointmentCard key={index} appointment={appointment} />;
       })}

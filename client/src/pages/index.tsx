@@ -3,7 +3,7 @@ import Section from 'components/Section';
 import NextLink from 'next/link';
 const Home = () => {
   return (
-    <div className="home page">
+    <div className="home page" datacy={'intro'}>
       <h1>Maiia's technical test</h1>
       <Section name="instructions" title="Instructions">
         <p>

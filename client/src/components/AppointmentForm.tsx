@@ -116,6 +116,7 @@ const AppointmentForm = () => {
       <form
         id="appointment-creation"
         onSubmit={handleSubmit(handleAppointmentCreation)}
+        datacy={'appointment-form'}
       >
         <Grid container xs={12} className={classes.formSection}>
           <Grid item wrap={'wrap'} xs={12} md={4} lg={3} xl={2}>
@@ -133,6 +134,7 @@ const AppointmentForm = () => {
                     field.onChange(event.target.value);
                     dispatch(setSelectedPractitionerId(event.target.value));
                   }}
+                  datacy={'practitioners-list'}
                 >
                   {practitioners.map((practitioner, index) => {
                     return (
@@ -145,7 +147,9 @@ const AppointmentForm = () => {
               )}
             />
             {errors.practitionerList && (
-              <RequiredField>This field is required</RequiredField>
+              <RequiredField datacy={'practitioners-required'}>
+                This field is required
+              </RequiredField>
             )}
           </Grid>
         </Grid>
@@ -165,6 +169,7 @@ const AppointmentForm = () => {
                     field.onChange(event.target.value);
                     dispatch(setSelectedPatientId(event.target.value));
                   }}
+                  datacy={'patients-list'}
                 >
                   {patients.map((patient, index) => {
                     return (
@@ -177,7 +182,9 @@ const AppointmentForm = () => {
               )}
             />
             {errors.patientList && (
-              <RequiredField>This field is required</RequiredField>
+              <RequiredField datacy={'patients-required'}>
+                This field is required
+              </RequiredField>
             )}
           </Grid>
         </Grid>
@@ -197,6 +204,7 @@ const AppointmentForm = () => {
                     field.onChange(event.target.value);
                     dispatch(setSelectedAvailabilityId(event.target.value));
                   }}
+                  datacy={'availabilities-list'}
                 >
                   {availabilities.map((availability, index) => {
                     return (
@@ -212,7 +220,9 @@ const AppointmentForm = () => {
               )}
             />
             {errors.availabilitiesList && (
-              <RequiredField>This field is required</RequiredField>
+              <RequiredField datacy={'availabilities-required'}>
+                This field is required
+              </RequiredField>
             )}
           </Grid>
         </Grid>
@@ -222,6 +232,7 @@ const AppointmentForm = () => {
               type={'submit'}
               form="appointment-creation"
               variant="outlined"
+              datacy={'appointment-creation-button'}
             >
               Create Appointment
             </Button>
