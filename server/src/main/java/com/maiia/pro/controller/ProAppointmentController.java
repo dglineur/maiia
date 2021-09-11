@@ -4,10 +4,13 @@ import com.maiia.pro.entity.Appointment;
 import com.maiia.pro.service.ProAppointmentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @CrossOrigin
 @RestController
@@ -28,6 +31,17 @@ public class ProAppointmentController {
         return proAppointmentService.findAll();
     }
 
+    @ApiOperation(value = "get an appointments")
+    @GetMapping("/{appointmentId")
+    public ResponseEntity<Appointment> getAppointment(@PathVariable final Integer appointmentId) {
+        try {
+            return new ResponseEntity<>(proAppointmentService.find(appointmentId), HttpStatus.OK);
+        }
+        catch (NoSuchElementException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @ApiOperation(value = "Post an appointment")
     @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
     public Appointment postAppointment(@RequestBody Appointment appointment) {
@@ -39,4 +53,12 @@ public class ProAppointmentController {
     public void deleteAppointments() {
         proAppointmentService.deleteAll();
     }
+
+    @ApiOperation(value = "Delete an appointment")
+    @DeleteMapping("/{appointmentId")
+    public void deleteAppointment(@PathVariable final Integer appointmentId) {
+        proAppointmentService.delete(appointmentId);
+    }
+
+
 }
