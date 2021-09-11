@@ -32,6 +32,7 @@ import { createNewAppointment } from 'store/appointments';
 import { formatDateRange } from 'utils/date';
 import { Controller, useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/styles';
+import { AppState } from 'store';
 
 const useStyles = makeStyles({
   formSection: {
@@ -54,7 +55,7 @@ const AppointmentForm = () => {
   const practitionerId = useSelector(selectedPractitionerId);
   const availabilityId = useSelector(selectedAvailabilityId);
 
-  const practitioners = useSelector((state) =>
+  const practitioners = useSelector((state: AppState) =>
     practitionersSelectors.selectAll(state.practitioners),
   );
 
@@ -62,14 +63,14 @@ const AppointmentForm = () => {
     dispatch(getPractitioners());
   }, []);
 
-  const patients = useSelector((state) =>
+  const patients = useSelector((state: AppState) =>
     patientsSelectors.selectAll(state.patients),
   );
   useEffect(() => {
     dispatch(getPatients());
   }, []);
 
-  const availabilities = useSelector((state) =>
+  const availabilities = useSelector((state: AppState) =>
     availabilitiesSelectors.selectAll(state.availabilities),
   );
 

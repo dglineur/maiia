@@ -5,10 +5,11 @@ import TimeSlots from 'components/TimeSlots';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSlots, timeslotsSelectors } from 'store/timeslots';
+import { AppState } from 'store';
 
 const TimeSlotPage = () => {
   const dispatch = useDispatch();
-  const timeslots = useSelector((state) =>
+  const timeslots = useSelector((state: AppState) =>
     timeslotsSelectors.selectAll(state.timeslots),
   );
 

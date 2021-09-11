@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useSelector } from 'react-redux';
 import { patientsSelectors } from 'store/patients';
 import { practitionersSelectors } from 'store/practitioners';
+import { AppState } from 'store';
 
 interface appointmentProps {
   appointment: Appointment;
@@ -32,10 +33,10 @@ const useStyles = makeStyles({
 export const AppointmentCard = ({ appointment }: appointmentProps) => {
   const classes = useStyles();
   console.log(JSON.stringify(appointment, null, 2));
-  const patient = useSelector((state) =>
+  const patient = useSelector((state: AppState) =>
     patientsSelectors.selectById(state.patients, appointment.patientId),
   );
-  const practitioner = useSelector((state) =>
+  const practitioner = useSelector((state: AppState) =>
     practitionersSelectors.selectById(
       state.practitioners,
       appointment.practitionerId,
