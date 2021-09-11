@@ -33,4 +33,10 @@ public class ProAppointmentController {
     public Appointment postAppointment(@RequestBody Appointment appointment) {
         return proAppointmentService.save(appointment);
     }
+
+    @ApiOperation(value = "Delete all appointments")
+    @DeleteMapping
+    public void deleteAppointments() {
+        proAppointmentService.deleteAll();
+    }
 }

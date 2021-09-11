@@ -8,6 +8,7 @@ describe('Appointments page', () => {
   });
 
   it('should have empty fields at init', () => {
+    cy.visit('/appointments');
     cy.get("[datacy='practitioners-list'] input").should('contain', '');
     cy.get("[datacy='patients-list'] input").should('contain', '');
     cy.get("[datacy='availabilities-list'] input").should('contain', '');
@@ -56,6 +57,15 @@ describe('Appointments page', () => {
   });
 
   it('should create an appointment when all fields are filled and clicking button', () => {
+    cy.request('DELETE', 'http://localhost:8080/appointments');
+    cy.visit('/appointments');
+    cy.get('#practitionerList').click();
+    cy.get('.MuiList-root > [tabindex="0"]').click();
+    cy.get('#patientList').click();
+    cy.get('.MuiList-root > [tabindex="0"]').click();
+    cy.get('#availabilitiesList').click();
+    cy.get('.MuiList-root > [tabindex="0"]').click();
+    cy.pick('appointment-creation-button').click();
     cy.pick('appointment-card').should('be.visible');
     cy.pick('appointment-card-date')
       .should('be.visible')

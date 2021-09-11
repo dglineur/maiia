@@ -27,4 +27,8 @@ public class ProAppointmentService {
     public Appointment save(Appointment appointment) {
         return appointmentRepository.save(appointment);
     }
+
+    public void deleteAll() {
+        appointmentRepository.deleteAll();
+    }
 }
