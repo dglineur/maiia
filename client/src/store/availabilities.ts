@@ -5,11 +5,10 @@ import {
 } from '@reduxjs/toolkit';
 import { parseIds, SERVER_API_ENDPOINT } from 'store/utils';
 import { Availability } from 'store/types';
-import patientsSlice from 'store/patients';
 
 export const getAvailabilities = createAsyncThunk(
   'getAvailabilities',
-  async (practitionerId: number, thunkAPI) => {
+  async (practitionerId: number) => {
     const response = await fetch(
       `${SERVER_API_ENDPOINT}/availabilities/${practitionerId}`,
     );

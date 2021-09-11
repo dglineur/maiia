@@ -1,14 +1,6 @@
 import React, { useEffect } from 'react';
 import { Appointment } from 'store/types';
-import {
-  Box,
-  Button,
-  Grid,
-  Hidden,
-  MenuItem,
-  Select,
-  styled,
-} from '@material-ui/core';
+import { Box, Button, Grid, MenuItem, Select, styled } from '@material-ui/core';
 import {
   getPractitioners,
   practitionersSelectors,
@@ -43,7 +35,6 @@ const useStyles = makeStyles({
 const AppointmentForm = () => {
   const {
     handleSubmit,
-    watch,
     control,
     setValue,
     formState: { errors },
@@ -66,6 +57,7 @@ const AppointmentForm = () => {
   const patients = useSelector((state: AppState) =>
     patientsSelectors.selectAll(state.patients),
   );
+
   useEffect(() => {
     dispatch(getPatients());
   }, []);
@@ -100,24 +92,28 @@ const AppointmentForm = () => {
 
   //to be coherent, we better use makeStyles, but in the case of simple component like span and div, styledComponents can be a great option too
   //so, because it's a test and not an prod application, i'll use styledComponent here and makeStyles in AppointmentCard
-  const RequiredField = styled('span')(({ theme }) => ({
+  const RequiredField = styled('span')(() => ({
     paddingLeft: `5px`,
     marginTop: '10px',
     color: 'red',
   }));
 
-  const FieldLabel = styled('span')(({ theme }) => ({
+  const FieldLabel = styled('span')(() => ({
     paddingRight: `5px`,
     minWidth: '75px',
     marginTop: '10px',
   }));
 
   return (
-    <Box display="flex" flexDirection="column" py={2}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      py={2}
+      datacy={'appointment-form'}
+    >
       <form
         id="appointment-creation"
         onSubmit={handleSubmit(handleAppointmentCreation)}
-        datacy={'appointment-form'}
       >
         <Grid container className={classes.formSection}>
           <Grid item xs={12} md={4} lg={3} xl={2}>

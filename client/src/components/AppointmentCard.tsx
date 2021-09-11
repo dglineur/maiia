@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
 export const AppointmentCard = ({ appointment }: appointmentProps) => {
   const classes = useStyles();
-  console.log(JSON.stringify(appointment, null, 2));
+
   const patient = useSelector((state: AppState) =>
     patientsSelectors.selectById(state.patients, appointment.patientId),
   );
